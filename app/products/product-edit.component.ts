@@ -29,8 +29,10 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.productForm = this.fb.group({
             productName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-            productCode:  ['', Validators.required],
-            confirmProductCode: ['', Validators.required],
+            codeGroup: this.fb.group({
+                productCode:  ['', Validators.required],
+                confirmProductCode: ['', Validators.required],
+            }),
             starRating: ['', NumberValidators.range(1,5)],
             description: '',
             availability: 'available',
@@ -80,7 +82,9 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         
         this.productForm.patchValue({
             productName: product.productName,
-            productCode: product.productCode,
+            codeGroup:{
+                productCode: product.productCode
+            },
             starRating: product.starRating,
             description: product.description,
             availability: product.availability,
@@ -89,7 +93,8 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         });
         this.isLoading = false;
 
-        const confirmProductCode= this.productForm.get('confirmProductCode');
+
+        const confirmProductCode= this.productForm.get('codeGroup.confirmProductCode');
         if (product.id === 0) {
             this.pageTitle = 'Add Product';
             //this.product.tags = [];
@@ -131,7 +136,8 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         if (this.productForm.dirty && this.productForm.valid) {
             // Copy the form values over the product object values
             let p = Object.assign({}, this.product, this.productForm.value);
-
+            p.productCode = p.codeGroup.productCode;
+            delete p.codeGroup;
             this.productService.saveProduct(p)
                 .subscribe(
                     () => this.onSaveComplete(),
