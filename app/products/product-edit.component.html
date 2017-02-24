@@ -108,7 +108,8 @@
                                  <input type="radio"
                                    value="available"
                                    name="availability"
-                                   formControlName="availability">Available
+                                   formControlName="availability"
+                                   (click)="changeAvailability('available')">Available
                             </label>
                         </div>
                         <div class="radio">
@@ -116,7 +117,8 @@
                                 <input type="radio"
                                    value="lessthan2weeks"
                                    name="availability"
-                                   formControlName="availability">Less than 2 weeks
+                                   formControlName="availability"
+                                   (click)="changeAvailability('lessthan2weeks')">Less than 2 weeks
                             </label>
                         </div>
                         <div class="radio">
@@ -124,7 +126,8 @@
                                 <input type="radio"
                                    value="morethan2weeks"
                                    name="availability"
-                                   formControlName="availability">More than 2 weeks
+                                   formControlName="availability"
+                                   (click)="changeAvailability('morethan2weeks')">More than 2 weeks
                             </label>
                         </div>
                         <div class="radio">
@@ -132,7 +135,8 @@
                                <input type="radio"
                                    value="outofstock"
                                    name="availability"
-                                   formControlName="availability">Out of stock   
+                                   formControlName="availability"
+                                   (click)="changeAvailability('outofstock')">Out of stock   
                             </label>
                         </div>
                     </div>

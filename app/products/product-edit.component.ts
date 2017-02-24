@@ -37,7 +37,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
             quantity: [0, [Validators.required, Validators.maxLength(8), Validators.pattern("^(0|[1-9][0-9]*)$")]]
         });
 
-
+       this.changeAvailability('availability');
 
         // Read the product Id from the route parameter
         this.sub = this.route.params.subscribe(
@@ -46,6 +46,22 @@ export class ProductEditComponent implements OnInit, OnDestroy {
                 this.getProduct(id);
             }
         );
+    }
+ 
+    changeAvailability(type: string): void{
+        const quantity= this.productForm.get('quantity');
+        const reasonForm= this.productForm.get('outOfStockReason');
+
+        if(type === "outofstock"){
+            reasonForm.setValidators(Validators.required);
+            quantity.clearValidators();
+        } else {
+            reasonForm.clearValidators();
+            quantity.setValidators([Validators.required, Validators.maxLength(8), Validators.pattern("^(0|[1-9][0-9]*)$")]);
+        }
+        
+        reasonForm.updateValueAndValidity();
+        quantity.updateValueAndValidity();
     }
 
     getProduct(id: number): void {
@@ -70,6 +86,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
             quantity: product.quantity
         });
         this.isLoading = false;
+
         const confirmProductCode= this.productForm.get('confirmProductCode');
         if (product.id === 0) {
             this.pageTitle = 'Add Product';
