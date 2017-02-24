@@ -1,0 +1,232 @@
+<div class="panel panel-primary" *ngIf="!isLoading">
+    <div class="panel-heading">
+        {{pageTitle}}
+    </div>
+
+    <div class="panel-body">
+        <form class="form-horizontal"
+              novalidate
+              [formGroup]="productForm"
+              (ngSubmit)="saveProduct()">
+            <fieldset>
+                <div class="form-group" 
+                     [ngClass]="{'has-error': (productForm.get('productName').touched || productForm.get('productName').dirty) && !productForm.get('productName').valid }">
+                    <label class="col-md-2 control-label" for="productNameId">Product Name</label>
+
+                    <div class="col-md-8">
+                        <input class="form-control" 
+                                id="productNameId" 
+                                type="text" 
+                                placeholder="Name (required)"
+                                required
+                                minlength="3"
+                                maxlength="50"
+                                formControlName="productName"/>
+                        <span class="help-block" *ngIf=" (productForm.get('productName').touched || productForm.get('productName').dirty) && !productForm.get('productName').valid ">
+                                <span *ngIf="productForm.get('productName').errors.required">
+                                     Please enter the product name
+                                </span>
+                                <span *ngIf="productForm.get('productName').errors.minlength">
+                                     The product name must be longer than 3 characters
+                                </span>
+                                <span *ngIf="productForm.get('productName').errors.maxlength">
+                                      The product name must be less than 50 characters
+                                </span>
+                                
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" 
+                     [ngClass]="{'has-error': (productForm.get('productCode').touched || productForm.get('productCode').dirty) && !productForm.get('productCode').valid }">
+                    <label class="col-md-2 control-label" for="productCodeId">Product Code</label>
+
+                    <div class="col-md-8">
+                        <input class="form-control" 
+                                id="productCodeId" 
+                                type="text" 
+                                required
+                                placeholder="Code (required)"
+                                formControlName="productCode"/>
+                        <span class="help-block" *ngIf="(productForm.get('productCode').touched || productForm.get('productCode').dirty) && !productForm.get('productCode').valid ">
+                                <span *ngIf="productForm.get('productCode').errors.required">
+                                     Please enter the product code
+                                </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group" *ngIf="mode=='create'"
+                     [ngClass]="{'has-error': (productForm.get('confirmProductCode').touched || productForm.get('confirmProductCode').dirty) && !productForm.get('confirmProductCode').valid }">
+                    <label class="col-md-2 control-label" for="confirmProductCodeId">Confirm Product Code</label>
+
+                    <div class="col-md-8">
+                        <input class="form-control" 
+                                id="confirmProductCodeId" 
+                                type="text" 
+                                required
+                                placeholder="Confirm Code (required)"
+                                formControlName="confirmProductCode"/>
+                        <span class="help-block" *ngIf="(productForm.get('confirmProductCode').touched || productForm.get('confirmProductCode').dirty) && !productForm.get('confirmProductCode').valid ">
+                                <span *ngIf="productForm.get('confirmProductCode').errors.required">
+                                     Please enter the product code
+                                </span>
+                        </span>
+                    </div>
+                </div>
+                
+                 <div class="form-group" 
+                     [ngClass]="{'has-error': (productForm.get('starRating').touched || productForm.get('starRating').dirty) && !productForm.get('starRating').valid }">
+                    <label class="col-md-2 control-label" for="starRatingId">Rating</label>
+
+                    <div class="col-md-8">
+                        <input class="form-control" 
+                                id="starRatingId" 
+                                type="text" 
+                                placeholder="Rating"
+                                formControlName="starRating"
+                                pattern="^[1-5]{1,1}(\.[0-9]{0,2})?$"/>
+                        <span class="help-block" *ngIf="(productForm.get('starRating').touched || productForm.get('starRating').dirty) && !productForm.get('starRating').valid ">
+                                <span *ngIf="productForm.get('starRating').errors.pattern">
+                                     The rating name must be between 1 and 5.
+                                </span>
+                                
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="descriptionId">Description</label>
+
+                    <div class="col-md-8">
+                        <textarea class="form-control" 
+                                id="descriptionId" 
+                                placeholder="Description"
+                                rows=3
+                                formControlName="description"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Availability</label>
+
+                    <div class="col-md-8">
+                        <div class="radio">
+                            <label>
+                                 <input type="radio"
+                                   value="available"
+                                   name="availability"
+                                   formControlName="availability">Available
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio"
+                                   value="lessthan2weeks"
+                                   name="availability"
+                                   formControlName="availability">Less than 2 weeks
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio"
+                                   value="morethan2weeks"
+                                   name="availability"
+                                   formControlName="availability">More than 2 weeks
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                               <input type="radio"
+                                   value="outofstock"
+                                   name="availability"
+                                   formControlName="availability">Out of stock   
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                 <div class="form-group" *ngIf="productForm.get('availability').value!='outofstock'"
+                     [ngClass]="{'has-error': (productForm.get('quantity').touched || productForm.get('quantity').dirty) && !productForm.get('quantity').valid }">
+                    <label class="col-md-2 control-label" for="quantityId">Quatity</label>
+
+                    <div class="col-md-8">
+                        <input class="form-control" 
+                                id="quantityId" 
+                                type="text" 
+                                placeholder="Quantity"
+                                formControlName="quantity"
+                                required
+                                maxlength="8"
+                                pattern="^(0|[1-9][0-9]*)$"/>
+                        <span class="help-block" *ngIf="(productForm.get('quantity').touched || productForm.get('quantity').dirty) && !productForm.get('quantity').valid ">
+                                <span *ngIf="productForm.get('quantity').errors.pattern">
+                                     The quantity must be numeric.
+                                </span>
+                                
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="productForm.get('availability').value=='outofstock'"
+                    [ngClass]="{'has-error': !productForm.get('outOfStockReason').valid }">
+                    <label class="col-md-2 control-label" for="outOsStockReasonId">Out of stock reason</label>
+
+                    <div class="col-md-8">
+                        <select class="form-control"                       
+                            required
+                            id="outOsStockReasonId"
+                            formControlName="outOfStockReason">
+                                <option value="" disabled selected hidden>Select a reason...</option>
+                                <option value="late_delivery">Late delivery by a supplier</option>
+                                <option value="under_ordering">Under ordering</option>
+                                <option value="stock_level_low">Safety stock level that is too low </option>
+                                <option value="product_quality_issues">Product quality issues</option>
+                                <option value="supplier_refusing">The supplier refusing to deliver </option>
+                                <option value="under_estimating">Under estimating the demand for a product </option>
+                        </select>
+                        <span class="help-block" *ngIf="(productForm.get('outOfStockReason').touched || productForm.get('outOfStockReason').dirty) && !productForm.get('outOfStockReason').valid ">
+                                <span *ngIf="productForm.get('outOfStockReason').errors.pattern">
+                                     The reason is required.
+                                </span>
+                                
+                        </span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-4 col-md-offset-2">
+                        <span>
+                            <button class="btn btn-primary"
+                                    type="submit"
+                                    style="width:80px;margin-right:10px"
+                                    [disabled]='!productForm.valid'>
+                                Save
+                            </button>
+                        </span>
+                        <span>
+                            <a class="btn btn-default"
+                               style="width:80px"
+                               [routerLink]="['/products']">
+                                Cancel
+                            </a>
+                        </span>
+                        <span *ngIf="mode=='edit'">
+                            <a class="btn btn-danger"
+                               style="width:80px"
+                               (click)="deleteProduct()">
+                                Delete
+                            </a>
+                        </span>  
+                     </div>
+                </div>
+                
+            </fieldset>
+        </form>
+
+        <br>Dirty: {{ productForm.dirty }} 
+        <br>Touched: {{ productForm.touched }}
+        <br>Valid: {{ productForm.valid }}
+        <br>Value: {{ productForm.value | json }}
+
+
+    </div>
+
+</div>
