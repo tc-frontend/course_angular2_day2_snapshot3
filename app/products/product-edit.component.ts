@@ -7,6 +7,7 @@ import { ActivatedRoute, Router  } from '@angular/router';
 import { IProduct } from './product';
 import { ProductService } from './product-mock.service';
 import { NumberValidators } from '../shared/number.validator';
+import {  StringValidators } from '../shared/string.validator';
 
 @Component({
     templateUrl: 'app/products/product-edit.component.html'
@@ -32,7 +33,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
             codeGroup: this.fb.group({
                 productCode:  ['', Validators.required],
                 confirmProductCode: ['', Validators.required],
-            }),
+            }, {validator: StringValidators.controlValueMatcher('productCode', 'confirmProductCode')}),
             starRating: ['', NumberValidators.range(1,5)],
             description: '',
             availability: 'available',

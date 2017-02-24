@@ -53,7 +53,7 @@
                     </div>
 
                     <div class="form-group" *ngIf="mode=='create'"
-                        [ngClass]="{'has-error': (productForm.get('codeGroup.confirmProductCode').touched || productForm.get('codeGroup.confirmProductCode').dirty) && !productForm.get('codeGroup.confirmProductCode').valid }">
+                        [ngClass]="{'has-error': ((productForm.get('codeGroup.confirmProductCode').touched || productForm.get('codeGroup.confirmProductCode').dirty) && !productForm.get('codeGroup.confirmProductCode').valid) || productForm.get('codeGroup').errors }">
                         <label class="col-md-2 control-label" for="confirmProductCodeId">Confirm Product Code</label>
 
                         <div class="col-md-8">
@@ -66,7 +66,12 @@
                                     <span *ngIf="productForm.get('codeGroup.confirmProductCode').errors.required">
                                         Please enter the product code
                                     </span>
+
                             </span>
+                            <span class="help-block" *ngIf="productForm.get('codeGroup').errors && productForm.get('codeGroup').errors.match">
+                                The confirmation does not match the producto code.
+                            </span>
+                   
                         </div>
                     </div>
                 </div>
