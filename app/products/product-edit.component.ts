@@ -27,14 +27,14 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     }
     ngOnInit(): void {
         this.productForm = this.fb.group({
-            productName: '',
-            productCode: '',
-            confirmProductCode: '',
-            starRating: '',
+            productName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+            productCode:  ['', Validators.required],
+            confirmProductCode: ['', Validators.required],
+            starRating: ['', Validators.pattern("^[1-5]{1,1}(\.[0-9]{0,2})?$")],
             description: '',
             availability: 'available',
-            outOfStockReason: '',
-            quantity: 0
+            outOfStockReason: ['', Validators.required],
+            quantity: [0, [Validators.required, Validators.maxLength(8), Validators.pattern("^(0|[1-9][0-9]*)$")]]
         });
 
 

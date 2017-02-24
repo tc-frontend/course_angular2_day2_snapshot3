@@ -18,9 +18,6 @@
                                 id="productNameId" 
                                 type="text" 
                                 placeholder="Name (required)"
-                                required
-                                minlength="3"
-                                maxlength="50"
                                 formControlName="productName"/>
                         <span class="help-block" *ngIf=" (productForm.get('productName').touched || productForm.get('productName').dirty) && !productForm.get('productName').valid ">
                                 <span *ngIf="productForm.get('productName').errors.required">
@@ -44,7 +41,6 @@
                         <input class="form-control" 
                                 id="productCodeId" 
                                 type="text" 
-                                required
                                 placeholder="Code (required)"
                                 formControlName="productCode"/>
                         <span class="help-block" *ngIf="(productForm.get('productCode').touched || productForm.get('productCode').dirty) && !productForm.get('productCode').valid ">
@@ -63,7 +59,6 @@
                         <input class="form-control" 
                                 id="confirmProductCodeId" 
                                 type="text" 
-                                required
                                 placeholder="Confirm Code (required)"
                                 formControlName="confirmProductCode"/>
                         <span class="help-block" *ngIf="(productForm.get('confirmProductCode').touched || productForm.get('confirmProductCode').dirty) && !productForm.get('confirmProductCode').valid ">
@@ -83,8 +78,7 @@
                                 id="starRatingId" 
                                 type="text" 
                                 placeholder="Rating"
-                                formControlName="starRating"
-                                pattern="^[1-5]{1,1}(\.[0-9]{0,2})?$"/>
+                                formControlName="starRating"/>
                         <span class="help-block" *ngIf="(productForm.get('starRating').touched || productForm.get('starRating').dirty) && !productForm.get('starRating').valid ">
                                 <span *ngIf="productForm.get('starRating').errors.pattern">
                                      The rating name must be between 1 and 5.
@@ -152,10 +146,7 @@
                                 id="quantityId" 
                                 type="text" 
                                 placeholder="Quantity"
-                                formControlName="quantity"
-                                required
-                                maxlength="8"
-                                pattern="^(0|[1-9][0-9]*)$"/>
+                                formControlName="quantity"/>
                         <span class="help-block" *ngIf="(productForm.get('quantity').touched || productForm.get('quantity').dirty) && !productForm.get('quantity').valid ">
                                 <span *ngIf="productForm.get('quantity').errors.pattern">
                                      The quantity must be numeric.
@@ -169,8 +160,7 @@
                     <label class="col-md-2 control-label" for="outOsStockReasonId">Out of stock reason</label>
 
                     <div class="col-md-8">
-                        <select class="form-control"                       
-                            required
+                        <select class="form-control"   
                             id="outOsStockReasonId"
                             formControlName="outOfStockReason">
                                 <option value="" disabled selected hidden>Select a reason...</option>
