@@ -6,6 +6,7 @@ import { ActivatedRoute, Router  } from '@angular/router';
 
 import { IProduct } from './product';
 import { ProductService } from './product-mock.service';
+import { NumberValidators } from '../shared/number.validator';
 
 @Component({
     templateUrl: 'app/products/product-edit.component.html'
@@ -30,7 +31,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
             productName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
             productCode:  ['', Validators.required],
             confirmProductCode: ['', Validators.required],
-            starRating: ['', Validators.pattern("^[1-5]{1,1}(\.[0-9]{0,2})?$")],
+            starRating: ['', NumberValidators.range(1,5)],
             description: '',
             availability: 'available',
             outOfStockReason: ['', Validators.required],
@@ -59,9 +60,10 @@ export class ProductEditComponent implements OnInit, OnDestroy {
             reasonForm.clearValidators();
             quantity.setValidators([Validators.required, Validators.maxLength(8), Validators.pattern("^(0|[1-9][0-9]*)$")]);
         }
-        
+
         reasonForm.updateValueAndValidity();
         quantity.updateValueAndValidity();
+
     }
 
     getProduct(id: number): void {
